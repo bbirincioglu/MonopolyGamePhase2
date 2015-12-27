@@ -1,0 +1,16 @@
+{content:"collect,100,bank.im.Collect 100 from bank"}
+{content:"collect,each,10,player.advance,birthday gift.im.Collect 10 from each player and advance to birthday gift space"}
+{content:"pay,50,pool.im.Pay 50 to pool"}
+{content:"advance,directly,income tax,pay or jail.im.Advance directly to income tax pay the cost or go to jail"}
+{content:"advance,transportation.im.Advance to any transportation property space"}
+{content:"move,below.im.Move one space below"}
+{content:"move,above.im.Move one space above"}
+{content:"condem,house,bank.im.Sell one of your houses 1/2 price to bank"}
+{content:"cut,1/2,railroad.nim,ns.Pay the 1/2 rent when land on a railroad"}
+{content:"reverse rent.nim,s.Collect one rent instead of paying"}
+{content:"pay,per,25,40,115,100,cab stand and transit station,house,hotel,skyscraper.im.Pay 25 per cab stand and transit station 40 per house 115 per hotel 100 per skyscreaper"}
+{content:"free.nim,s.Get out of jail"}
+{content:"jail.im.Go to the jail"}
+{content:"advance,stock exchange.im.Advance to stock exchange space"}
+{content:"downgrade,1,color.im.Downgrade once every owned property in a color group"}
+{content:"pay,move,50,directly,just visiting,lost 1 turn.im.Pay 50 to bank and go directly to just visiting square and lose 1 turn"}

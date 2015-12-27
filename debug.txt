@@ -1,0 +1,3 @@
+{"cards":"","die1Value":"1","money":"800","die2Value":"3","name":"Player0","squares":"","speedDieValue":"1","currentLocation":"BOYLSTON STREET"}
+{"cards":"","die1Value":"1","money":"800","die2Value":"1","name":"Player1","squares":"","speedDieValue":"1","currentLocation":"Go"}
+{"cards":"","die1Value":"1","money":"800","die2Value":"1","name":"Player2","squares":"","speedDieValue":"1","currentLocation":"Go"}

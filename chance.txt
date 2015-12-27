@@ -1,0 +1,34 @@
+{content:"advance,closest utility.im.Advance to closest utility if owned then roll 2 dice and pay the owner 10 times that"}
+{content:"jail.im.Go to jail"}
+{content:"advance,closest railroad,owned twice.im.Advance to closest railroad if owned pay the twice rent"}
+{content:"pay,per,25,house,cab stand,100,hotel,skyscraper.im.Pay 25 per house and cab stand 100 per hotel and skyscraper"}
+{content:"free.nim,s.Get out of jail"}
+{content:"advance,3,back.im.Move 3 space back"}
+{content:"pay,150,pool.im.Pay 150 to pool"}
+{content:"advance,stock exchange.im.Advance to stock exchange if you pass pay corners take the money"}
+{content:"collect,150.im.Collect 150 from bank"}
+{content:"advance,closest unowned,closest owned.im.Advance closest unowned space if all owned advance closest owned space"}
+{content:"foreclose.nim,ns.Foreclose any opponents morgtaged property"}
+{content:"advance,tax refund.collect,pool.nim,s.Advance tax refund and collect the pool money"}
+{content:"advance,roll one.im.Advance to roll one space and roll the dice"}
+{content:"downgrade,1,color.im.Downgrade once all properties in a color group"}
+{content:"pay,per,25,unmortgaged property,pool.im.Pay 25 per unmortgaged property to the pool"}
+{content:"advance,black and white cab.im.Advance to black and white cab"}
+{content:"pay,each,50.im.Pay each player 50"}
+{content:"give,advance,square,bank,jail.im.Give a property to bank if you dont have one then go to jail" }
+{content:"advance,current location.im.Go around and come back to current position"}
+{content:"advance all,canal street.im.Advance all players to canal street"}
+{content:"take,cab company.advance,taken.im.Take a cab company from a player if not owned then purchase and go to that space"}
+{content:"build,1,house.nim,s.Build 1 free house to one space"}
+{content:"excuse,rent.nim,ns.Use this to excuse a rent"}
+{content:"move,below.im.Move a space below"}
+{content:"move,above.im.Move a space above"}
+{content:"pay,15,pool.im.Pay the pool 15 dollars"}
+{content:"advance,pay corner.im.Advance to the paycorner of your track and get money"}
+{content:"stock,return,1/2.im.All stockholders give 1/2 of their stocks to bank"}
+{content:"stock,radio,1/2,2 pay.im.General radio dividents 1/2 for next 2 payouts"}
+{content:"stock,collect,radio,motion.im.General Radio and Motions Pictures dividents collected immediately"}
+{content:"stock,jail.im.If you own any stock pay dividents to pool and go to jail otherwise nothing happens"}
+{content:"say no.nim,s.Use this to stop any action from any player towards you"}
+{content:"jail2.im.Go to jail and all rents goes to pool while in there"}
+{content:"bus ticket.nim,ns.Go anywhere in your side with this bus ticket"}

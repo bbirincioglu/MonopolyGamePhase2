@@ -1,0 +1,25 @@
+{content:"advance,closest utility.im.Advance to closest utility"}
+{content:"jail.im"}
+{content:"advance,closest railroad,owned twice.im.Advan to closest railroad if owned pay the twice rent"}
+{content:"pay,per,25,house,cab stand,100,hotel,skyscraper.im.Pay 25 per house and cab stand 100 per hotel and skyscraper"}
+{content:"free.nim,s.Get out of jail"}
+{content:"advance,3,back.im.Move 3 space back"}
+{content:"pay,150,pool.im.Pay 150 to pool"}
+{content:"advance,stock exchange.im.Advance to stock exchange"}
+{content:"collect,150.im.Collect 150 from bank"}
+{content:"advance,closest unowned,closest owned.im.Advance closest unowned space if all owned advance closest owned space"}
+{content:"foreclose.nim,ns.Foreclose any opponents morgtaged property"}
+{content:"advance,tax refund.collect,pool.nim,s.Advance tac refund and collect the pool money"}
+{content:"advance,roll one.im.Advance to roll one space"}
+{content:"downgrade,1,color.im.Downgrade once all properties in a color group"}
+{content:"pay,per,25,unmortgaged property,pool.im.Pay 25 per unmortgaged property to the pool"}
+{content:"advance,black and white cab.im.Advance to black and white cab"}
+{content:"pay,each,50.im.Pay each player 50"}
+{content:"give,advance,square,bank,jail.im.Give a property to bank if you dont have one then go to jail" }
+{content:"advance,current location.im.Go around and come back to current position"}
+{content:"advance all,canal street.im.Advance all players to canal street"}
+{content:"take,cab company.advance,taken.im.Take a cab company from a player if not owned then purchase and go to that space"}
+{content:"build,1,house.nim,s.Build 1 free house to one space"}
+{content:"excuse,rent.nim,ns.Use this to excuse a rent"}
+{content:"move,below.im.Move a space below"}
+{content:"move,above.im.Move a space above"}
