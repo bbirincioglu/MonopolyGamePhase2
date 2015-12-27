@@ -1,10 +1,18 @@
 package domain;
 import org.json.JSONObject;
 
-
+/**
+ * 
+ * @author Ali Furkan
+ * Hollandtunnel square
+ * @
+ */
 public class HollandTunnel extends Square {
 	private HollandTunnel opposite;
-	
+	/**
+	 * Constructor for hollandtunnel
+	 * @param name
+	 */
 	public HollandTunnel(String name) {
 		super(name);
 		setOpposite(null);
@@ -12,6 +20,11 @@ public class HollandTunnel extends Square {
 	}
 
 	@Override
+	/**
+	 * Moves to the opposite side of the tunnel
+	 * immediately
+	 * @param piece
+	 */
 	public void landedOn(Piece piece) {
 		// TODO Auto-generated method stub
 		piece.moveImmediate(getOpposite());
@@ -22,7 +35,11 @@ public class HollandTunnel extends Square {
 		// TODO Auto-generated method stub
 		
 	}
-	
+	/**
+	 * Creates hollandtunnel object from json format
+	 * @param squareAsJSON
+	 * @return
+	 */
 	public static HollandTunnel fromJSON(JSONObject squareAsJSON) {
 		HollandTunnel hollandTunnel = null;
 		
