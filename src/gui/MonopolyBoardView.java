@@ -61,7 +61,7 @@ public class MonopolyBoardView extends JPanel {
 			for (int i = 0; i < players.size(); i++) {
 				Player player = players.get(i);
 				PieceView pieceView = new PieceView(player.getPiece());
-				player.moveImmediate(monopolyBoard.getSquare("GO"));
+				player.moveImmediate(monopolyBoard.getSquare("Go"));
 			}
 		}
 	}

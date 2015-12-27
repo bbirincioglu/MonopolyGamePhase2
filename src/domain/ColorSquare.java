@@ -1,11 +1,12 @@
 package domain;
 import java.util.ArrayList;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 
 public class ColorSquare extends BuyableSquare {
-	private static final String[] FIELD_NAMES = {"name", "price", "rents", "houseCost", "hotelCost", "skyscraperCost", "mortgageValue", "color"};
+	private static final String[] FIELD_NAMES = {"name", "isMortgaged", "buildingNum", "price", "rents", "houseCost", "hotelCost", "skyscraperCost", "mortgageValue", "color"};
 	
 	private ArrayList<Integer> rents;
 	private int houseCost;
@@ -14,17 +15,28 @@ public class ColorSquare extends BuyableSquare {
 	private int mortgageValue;
 	private String color;
 	private int buildingNum;
+	/**
+	 * 
+	 * @param name
+	 * @param price
+	 * @param rents
+	 * @param houseCost
+	 * @param hotelCost
+	 * @param skyscraperCost
+	 * @param mortgageValue
+	 * @param color
+	 */
 	
-	public ColorSquare(String name, int price, ArrayList<Integer> rents,int houseCost,
+	public ColorSquare(String name, boolean isMortgaged, int buildingNum, int price, ArrayList<Integer> rents,int houseCost,
 			int hotelCost, int skyscraperCost,int mortgageValue,String color) {
-		super(name, price);
+		super(name, isMortgaged, price);
 		this.rents=rents;
 		this.houseCost=houseCost;
 		this.hotelCost=hotelCost;
 		this.skyscraperCost=skyscraperCost;
 		this.mortgageValue=mortgageValue;
 		this.color=color;
-		this.buildingNum = 0;
+		this.buildingNum = buildingNum;
 		// TODO Auto-generated constructor stub
 	}
 	
@@ -258,20 +270,22 @@ public class ColorSquare extends BuyableSquare {
 	public static ColorSquare fromJSON(JSONObject squareAsJSON) {
 		ColorSquare colorSquare = null;
 		
-		try {
+		try {		
 			String name = squareAsJSON.getString(FIELD_NAMES[0]);
-			int price = squareAsJSON.getInt(FIELD_NAMES[1]);
-			String rentsString = squareAsJSON.getString(FIELD_NAMES[2]);
+			boolean isMortgaged = squareAsJSON.getBoolean(FIELD_NAMES[1]);
+			int buildingNum = squareAsJSON.getInt(FIELD_NAMES[2]);
+			int price = squareAsJSON.getInt(FIELD_NAMES[3]);
+			String rentsString = squareAsJSON.getString(FIELD_NAMES[4]);
 			ArrayList<Integer> rents = parse(rentsString);
-			int houseCost = squareAsJSON.getInt(FIELD_NAMES[3]);
-			int hotelCost = squareAsJSON.getInt(FIELD_NAMES[4]);
-			int skyscraperCost = squareAsJSON.getInt(FIELD_NAMES[5]);
-			int mortgageValue = squareAsJSON.getInt(FIELD_NAMES[6]);
-			String color = squareAsJSON.getString(FIELD_NAMES[7]);
+			int houseCost = squareAsJSON.getInt(FIELD_NAMES[5]);
+			int hotelCost = squareAsJSON.getInt(FIELD_NAMES[6]);
+			int skyscraperCost = squareAsJSON.getInt(FIELD_NAMES[7]);
+			int mortgageValue = squareAsJSON.getInt(FIELD_NAMES[8]);
+			String color = squareAsJSON.getString(FIELD_NAMES[9]);
 			
-			colorSquare = new ColorSquare(name, price, rents, houseCost, hotelCost, skyscraperCost, mortgageValue, color);
+			colorSquare = new ColorSquare(name, isMortgaged, buildingNum, price, rents, houseCost, hotelCost, skyscraperCost, mortgageValue, color);
 		} catch (Exception e) {
-			
+			e.printStackTrace();
 		}
 		
 		return colorSquare; 

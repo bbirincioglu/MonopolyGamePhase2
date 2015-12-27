@@ -58,5 +58,5 @@ public static UtilityDescription fromJSON(JSONObject descriptionAsJSON){
 	}
 	desc=new UtilityDescription(multiplicators, mortgageValue);
 	return desc;
-}
+	}
 }

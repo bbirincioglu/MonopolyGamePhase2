@@ -15,6 +15,7 @@ import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -376,7 +377,7 @@ public class Options extends JPanel {
 		}
 		
 		public class ButtonsPanel extends JPanel {
-			private String[] buttonsTexts = new String[]{"Add Square", "Remove Square", "Add Card", "Remove Card", "Build", "Demolish"};
+			private String[] buttonsTexts = new String[]{"Add Square", "Remove Square", "Add Card", "Remove Card", "Add Stock", "Remove Stock", "Build", "Demolish"};
 			
 			public ButtonsPanel() {
 				super();
@@ -421,6 +422,18 @@ public class Options extends JPanel {
 						if (card != null && !card.equals("")) {
 							selectablesPanel.addCard(card);
 						}
+					} else if (buttonText.equals("Add Stock")) {
+						String stock = selectablesPanel.removeSelectedStock();
+						
+						if (stock != null && !stock.equals("")) {
+							selectedPlayerPanel.addStock(stock);
+						}
+					} else if (buttonText.equals("Remove Stock")) {
+						String stock = selectedPlayerPanel.removeSelectedStock();
+						
+						if (stock != null && !stock.equals("")) {
+							selectablesPanel.addStock(stock);
+						}
 					} else if (buttonText.equals("Build")) {
 						selectedPlayerPanel.buildOnSelectedSquare();
 					} else if (buttonText.equals("Demolish")) {
@@ -451,13 +464,48 @@ public class Options extends JPanel {
 		private class SelectablesPanel extends JPanel {
 			private SteppedComboBox squaresComboBox;
 			private SteppedComboBox cardsComboBox;
+			private SteppedComboBox stocksComboBox;
 			
 			public SelectablesPanel() {
 				super();
+				setLayout(new GridLayout(3, 1));
+				
 				String[] buyableSquaresNames = findBuyableSquaresNames();
 				setSquaresComboBox(ComponentBuilder.composeDefaultSteppedComboBox(50, 20, 
 						200, buyableSquaresNames, null, null));
 				add(getSquaresComboBox());
+				
+				setCardsComboBox(ComponentBuilder.composeDefaultSteppedComboBox(50, 20, 200, new String[]{}, null, null));
+				
+				setStocksComboBox(ComponentBuilder.composeDefaultSteppedComboBox(50, 20, 200, findOptions("stocks.txt", "name"), null, null));
+				add(getStocksComboBox());
+			}
+			
+			private String[] findOptions(String fileName, String searchKey) {
+				String[] options;
+				
+				ArrayList<JSONObject> elementsAsJSON = Reader.read(fileName);
+				options = new String[elementsAsJSON.size()];
+				int i = 0;
+				
+				try {
+					for (JSONObject elementAsJSON : elementsAsJSON) {
+						options[i] = elementAsJSON.getString(searchKey);
+						i++;
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				
+				return options;
+			}
+			
+			public void setStocksComboBox(SteppedComboBox stocksComboBox) {
+				this.stocksComboBox = stocksComboBox;
+			}
+			
+			public SteppedComboBox getStocksComboBox() {
+				return stocksComboBox;
 			}
 			
 			public String removeSelectedSquare() {
@@ -472,12 +520,22 @@ public class Options extends JPanel {
 				return removal;
 			}
 			
+			public String removeSelectedStock() {
+				String removal = (String) getStocksComboBox().getSelectedItem();
+				getStocksComboBox().removeItem(removal);
+				return removal;
+			}
+			
 			public void addSquare(String square) {
 				getSquaresComboBox().addItem(square);
 			}
 			
 			public void addCard(String card) {
 				getCardsComboBox().addItem(card);
+			}
+			
+			public void addStock(String stock) {
+				getStocksComboBox().addItem(stock);
 			}
 			
 			public void setSquaresComboBox(SteppedComboBox squaresComboBox) {
@@ -537,7 +595,7 @@ public class Options extends JPanel {
 		}
 		
 		public class PlayerPanel extends JPanel implements MouseListener {
-			private final String[] FIELDS_NAMES = new String[]{"name", "money", "currentLocation", "squares", "cards", "die1Value", "die2Value", "speedDieValue"};
+			private final String[] FIELDS_NAMES = new String[]{"name", "money", "currentLocation", "squares", "cards", "stocks", "die1Value", "die2Value", "speedDieValue"};
 			public final Color COLOR_SELECTED = Color.GREEN;
 			public final Color COLOR_UNSELECTED = getBackground();
 			private JLabel nameLabel;
@@ -545,6 +603,7 @@ public class Options extends JPanel {
 			private JTextField currentLocation;
 			private SteppedComboBox squares;
 			private SteppedComboBox cards;
+			private SteppedComboBox stocks;
 			private JComboBox die1Value;
 			private JComboBox die2Value;
 			private JComboBox speedDieValue;
@@ -559,11 +618,11 @@ public class Options extends JPanel {
 				
 				addMouseListener(this);
 				setBorder(BorderFactory.createLineBorder(Color.black));
-				initializeChildren(name, String.valueOf(money), "Go", new String[]{}, new String[]{}, "1", "1", "1");
+				initializeChildren(name, String.valueOf(money), "Go", new String[]{}, new String[]{}, new String[]{}, "1", "1", "1");
 				addChildren();
 			}
 			
-			public PlayerPanel(String name, String money, String currentLocation, String[] squares, String[] cards, String die1Value, String die2Value, String speedDieValue) {
+			public PlayerPanel(String name, String money, String currentLocation, String[] squares, String[] cards, String[] stocks, String die1Value, String die2Value, String speedDieValue) {
 				super();
 				if (name.contains("0")) {
 					setBackground(COLOR_SELECTED);
@@ -573,16 +632,17 @@ public class Options extends JPanel {
 				
 				addMouseListener(this);
 				setBorder(BorderFactory.createLineBorder(Color.black));
-				initializeChildren(name, money, currentLocation, squares, cards, die1Value, die2Value, speedDieValue);
+				initializeChildren(name, money, currentLocation, squares, cards, stocks, die1Value, die2Value, speedDieValue);
 				addChildren();
 			}
 			
-			private void initializeChildren(String name, String money, String currentLocation, String[] squares, String[] cards, String die1Value, String die2Value, String speedDieValue) {
+			private void initializeChildren(String name, String money, String currentLocation, String[] squares, String[] cards, String[] stocks, String die1Value, String die2Value, String speedDieValue) {
 				setNameLabel(ComponentBuilder.composeDefaultLabel(name));
 				setMoney(ComponentBuilder.composeDefaultTextField(50, 20, String.valueOf(money), null));
 				setCurrentLocation(ComponentBuilder.composeDefaultTextField(200, 20, currentLocation, null));
 				setSquares(ComponentBuilder.composeDefaultSteppedComboBox(50, 20, 200, squares, null, null));
 				setCards(ComponentBuilder.composeDefaultSteppedComboBox(50, 20, 400, cards, null, null));
+				setStocks(ComponentBuilder.composeDefaultSteppedComboBox(50, 20, 200, stocks, null, null));
 				setDie1Value(ComponentBuilder.composeDefaultComboBox(50, 20, new String[]{"1", "2", "3", "4", "5", "6"}, die1Value, null));
 				setDie2Value(ComponentBuilder.composeDefaultComboBox(50, 20, new String[]{"1", "2", "3", "4", "5", "6"}, die2Value, null));
 				setSpeedDieValue(ComponentBuilder.composeDefaultSteppedComboBox(50, 20, 75, new String[]{"1", "2", "3", "Bus", "Bus", "Mr.Monopoly"}, speedDieValue, null));
@@ -590,7 +650,7 @@ public class Options extends JPanel {
 			
 			private void addChildren() {
 				JComponent[] theOnesInSouth = new JComponent[]{getNameLabel(), getMoney(), getCurrentLocation()};
-				JComponent[] theOnesInCenter = new JComponent[]{getSquares(), getCards()};
+				JComponent[] theOnesInCenter = new JComponent[]{getSquares(), getCards(), getStocks()};
 				JComponent[] theOnesInNorth = new JComponent[]{getDie1Value(), getDie2Value(), getSpeedDieValue()};
 				add(ComponentBuilder.composeDummyContainer(theOnesInSouth, null, null), BorderLayout.SOUTH);
 				add(ComponentBuilder.composeDummyContainer(theOnesInCenter, null, null), BorderLayout.CENTER);
@@ -603,6 +663,10 @@ public class Options extends JPanel {
 			
 			public void addCard(String card) {
 				getCards().addItem(card);
+			}
+			
+			public void addStock(String stock) {
+				getStocks().addItem(stock);
 			}
 			
 			public String removeSelectedSquare() {
@@ -628,6 +692,18 @@ public class Options extends JPanel {
 				if (cards.getItemCount() != 0) {
 					removal = (String) cards.getSelectedItem();
 					cards.removeItem(removal);
+				}
+				
+				return removal;
+			}
+			
+			public String removeSelectedStock() {
+				String removal = null;
+				SteppedComboBox stocks = getStocks();
+				
+				if (stocks.getItemCount() != 0) {
+					removal = (String) stocks.getSelectedItem();
+					stocks.removeItem(removal);
 				}
 				
 				return removal;
@@ -734,6 +810,14 @@ public class Options extends JPanel {
 			public JTextField getMoney() {
 				return money;
 			}
+			
+			public void setStocks(SteppedComboBox stocks) {
+				this.stocks = stocks;
+			}
+			
+			public SteppedComboBox getStocks() {
+				return stocks;
+			}
 
 			public void setMoney(JTextField money) {
 				this.money = money;
@@ -827,7 +911,7 @@ public class Options extends JPanel {
 				
 			}
 			
-			public PlayerPanel fromJSON(JSONObject playerInfoAsJSON) {
+			/*public PlayerPanel fromJSON(JSONObject playerInfoAsJSON) {
 				PlayerPanel playerPanel = null;
 				class Helper {
 					public String[] decomposeAppendedString(String appendedString) {
@@ -868,7 +952,7 @@ public class Options extends JPanel {
 				}	
 				
 				return playerPanel;
-			}
+			}*/
 			
 			public JSONObject toJSON() {
 				class Helper {
@@ -901,6 +985,7 @@ public class Options extends JPanel {
 				String currentLocation = getCurrentLocation().getText();
 				String squaresAppended = helper.composeAppendedString(getSquares(), ":");
 				String cardsAppended = helper.composeAppendedString(getCards(), ":");
+				String stocksAppended = helper.composeAppendedString(getStocks(), ":");
 				String die1Value = getDie1Value().getSelectedItem().toString();
 				String die2Value = getDie2Value().getSelectedItem().toString();
 				String speedDieValue = getSpeedDieValue().getSelectedItem().toString();
@@ -917,9 +1002,10 @@ public class Options extends JPanel {
 					playerInfoAsJSON.put(FIELDS_NAMES[2], currentLocation);
 					playerInfoAsJSON.put(FIELDS_NAMES[3], squaresAppended);
 					playerInfoAsJSON.put(FIELDS_NAMES[4], cardsAppended);
-					playerInfoAsJSON.put(FIELDS_NAMES[5], die1Value);
-					playerInfoAsJSON.put(FIELDS_NAMES[6], die2Value);
-					playerInfoAsJSON.put(FIELDS_NAMES[7], speedDieValue);
+					playerInfoAsJSON.put(FIELDS_NAMES[5], stocksAppended);
+					playerInfoAsJSON.put(FIELDS_NAMES[6], die1Value);
+					playerInfoAsJSON.put(FIELDS_NAMES[7], die2Value);
+					playerInfoAsJSON.put(FIELDS_NAMES[8], speedDieValue);
 				} catch(Exception e) {
 					e.printStackTrace();
 				}

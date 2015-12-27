@@ -7,8 +7,8 @@ import org.json.JSONObject;
 /**
  * @author Ali Furkan
  * Piece class is for the representation of the tools on the game board.
- * 
  */
+
 public class Piece {
 	//@Overview: Piece is the moving tool of the player.
 	

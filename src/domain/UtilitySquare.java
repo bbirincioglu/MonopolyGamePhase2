@@ -8,8 +8,8 @@ public class UtilitySquare extends BuyableSquare{
 
 	private static UtilityDescription description;
 	
-	public UtilitySquare(String name, int price) {
-		super(name, price);
+	public UtilitySquare(String name, boolean isMortgaged, int price) {
+		super(name, isMortgaged, price);
 		// TODO Auto-generated constructor stub
 	}
 
@@ -48,10 +48,11 @@ public class UtilitySquare extends BuyableSquare{
 		
 		try {
 			String name = squareAsJSON.getString("name");
+			boolean isMortgaged = squareAsJSON.getBoolean("isMortgaged");
 			int price = squareAsJSON.getInt("price");
-			utilitySquare = new UtilitySquare(name, price);
+			utilitySquare = new UtilitySquare(name, isMortgaged, price);
 		} catch (Exception e) {
-			
+			e.printStackTrace();
 		}
 		
 		return utilitySquare;

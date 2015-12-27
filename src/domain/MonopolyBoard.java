@@ -12,7 +12,6 @@ import org.json.JSONObject;
 
 public class MonopolyBoard {
 	private static final String[] FIELD_NAMES = new String[] {"outerSquares", "middleSquares", "innerSquares", "chanceCards", "currentChanceCardIndex", "communityCards", "currentCommunityCardIndex"};
-	
 	private ArrayList<Square> outerSquares;
 	private ArrayList<Square> middleSquares;
 	private ArrayList<Square> innerSquares;
@@ -24,10 +23,12 @@ public class MonopolyBoard {
 	private int currentCommunityCardIndex;
 	
 	private Bank bank;
-	
+	/**
+	 * Constructor for MonopolyBoard class.
+	 * @effects initializes bank, chanceCard, communityCards, outerSquares, middleSquares, innerSquares
+	 * currentChanceCardIndex, currentCommunityCardIndex fields. Connects squares, and shuffles cards.
+	 */
 	public MonopolyBoard() {
-		//@effects: MonopolyBoard constructor initializes cards, squares, bank and connects squares.
-		
 		initializeCards();
 		initializeSquares();
 		connectSquares(getOuterSquares(), getMiddleSquares(), getInnerSquares());
@@ -63,11 +64,10 @@ public class MonopolyBoard {
 		}
 	}
 	
-	private void initializeCards() {
+	public void initializeCards() {
 		//@requires:chanceCards is not null, and communityCards is not null
 		//@modifies: chanceCards, communityCards
 		//@effects:shuffles the given chanceCards and communityCards
-		
 		setChanceCards(new ArrayList<ChanceCard>());
 		setCommunityCards(new ArrayList<CommunityCard>());
 		setCurrentChanceCardIndex(0);
@@ -213,13 +213,12 @@ public class MonopolyBoard {
 	/**
 	 * Returns the square with specified name by searching all layers of monopoly board.
 	 * @param name name of the square to search for.
+	 * @requires name != null
+	 * @effects returns the square with given name, or null if can't found.
 	 * @return square with specified name, or null if can't found.
 	 */
 	
 	public Square getSquare(String name) {
-		//@requires: name != null
-		//@effects: returns the square with given name, or null if can't found.
-		
 		Square square = null;
 		ArrayList<Square> outerSquares = getOuterSquares();
 		ArrayList<Square> middleSquares = getMiddleSquares();
@@ -252,14 +251,13 @@ public class MonopolyBoard {
 	}
 	
 	/**
-	 * Returns a chance card according to chance card index.
-	 * @return a chance card according to chance card index
+	 * Returns a chance card according to currentChanceCardIndex.
+	 * @requires chanceCards != null
+	 * @effects returns the chance card according to currentChanceCardIndex.
+	 * @return a chance card according to currentChanceCardIndex.
 	 */
 	
 	public ChanceCard getChanceCard() {
-		//@requires: chanceCards != null
-		//@effects: returns the chance card according to currentChanceCardIndex.
-		
 		ChanceCard chanceCard = getChanceCards().get(getCurrentChanceCardIndex());
 		setCurrentChanceCardIndex((getCurrentChanceCardIndex() + 1) % getChanceCards().size());
 		return chanceCard;
@@ -267,19 +265,20 @@ public class MonopolyBoard {
 	
 	/**
 	 * Returns a community card according to community card index.
+	 * @requires communityCards != null
+	 * @effects returns the community card according to currentCommunityCardIndex.
 	 * @return a community card according to community card index
 	 */
 	
 	public CommunityCard getCommunityCard() {
-		//@requires: communityCards != null
-		//@effects: returns the community card according to currentCommunityCardIndex.
-		
 		CommunityCard communityCard = getCommunityCards().get(getCurrentCommunityCardIndex());
 		setCurrentCommunityCardIndex((getCurrentCommunityCardIndex() + 1) % getCommunityCards().size());
 		return communityCard;
 	}
+	
 	/**
-	 * Gets the bank instance stored as a field.
+	 * Returns the bank instance stored as a field.
+	 * @effects returns the bank instance stored as a field.
 	 * @return the bank instance stored as a field.
 	 */
 	
@@ -288,7 +287,9 @@ public class MonopolyBoard {
 	}
 	
 	/**
-	 * Sets the bank field to the specified bank instance.
+	 * Sets bank field to the specified bank instance.
+	 * @effects sets bank field to the specified bank instance.
+	 * @modifies this
 	 * @param bank bank instance to be referenced.
 	 */
 
@@ -297,7 +298,8 @@ public class MonopolyBoard {
 	}
 	
 	/**
-	 * Gets the squares located at the outer most layer of the board as a list.
+	 * Returns the squares located at the outer most layer of the board as a list.
+	 * @effects returns the squares located at the outer most layer of the board as a list.
 	 * @return squares that are in outer most layer.
 	 */
 	
@@ -306,7 +308,9 @@ public class MonopolyBoard {
 	}
 	
 	/**
-	 * Sets the outer squares field to the specified ArrayList instance.
+	 * Sets outerSquares field to the specified list.
+	 * @modifies this
+	 * @effects sets outerSquares field to the specified list.
 	 * @param outerSquares a list of squares in outer most layer to be referenced.
 	 */
 	
@@ -418,6 +422,11 @@ public class MonopolyBoard {
 		this.currentCommunityCardIndex = currentCommunityCardIndex;
 	}
 	
+	/**
+	 * Checks whether concrete representation of this object is correct.
+	 * @effects return true if concrete representation of this object is correct, otherwise false
+	 * @return true if concrete representation of this object is correct, otherwise false
+	 */
 	public boolean repOK() {
 		boolean control = true;
 		DuplicateElementChecker dec = new DuplicateElementChecker();
@@ -435,6 +444,11 @@ public class MonopolyBoard {
 		
 		return control;
 	}
+	
+	/**
+	 * @effects returns json object representation of this object.
+	 * @return json object representation of this object.
+	 */
 	
 	public JSONObject toJSON() {
 		JSONObject monopolyBoardAsJSON = new JSONObject();
@@ -455,6 +469,12 @@ public class MonopolyBoard {
 		
 		return monopolyBoardAsJSON;
 	}
+	
+	/**
+	 * Returns string representation of this object.
+	 * @effects returns string representation of this object.
+	 * @return string representation of this object.
+	 */
 	
 	public String toString() {
 		return toJSON().toString();

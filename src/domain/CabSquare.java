@@ -7,8 +7,8 @@ import org.json.JSONObject;
 public class CabSquare extends BuyableSquare{
 	private static CabDescription description;
 	
-	public CabSquare(String name, int price) {
-		super(name, price);
+	public CabSquare(String name, boolean isMortgaged, int price) {
+		super(name, isMortgaged, price);
 	}
 	
 	public static CabDescription getDescription() {
@@ -46,10 +46,11 @@ public class CabSquare extends BuyableSquare{
 		
 		try {
 			String name = squareAsJSON.getString("name");
+			boolean isMortgaged = squareAsJSON.getBoolean("isMortgaged");
 			int price = squareAsJSON.getInt("price");
-			cabSquare = new CabSquare(name, price);
+			cabSquare = new CabSquare(name, isMortgaged, price);
 		} catch (Exception e) {
-			
+			e.printStackTrace();
 		}
 		
 		return cabSquare;

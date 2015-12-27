@@ -11,9 +11,9 @@ public class RailRoadSquare extends BuyableSquare {
 	private boolean isTrainDepotBuilt;
 
 	
-	public RailRoadSquare(String name, int price) {
-		super(name, price);
-		isTrainDepotBuilt=false;
+	public RailRoadSquare(String name, boolean isMortgaged, boolean isTrainDepotBuilt, int price) {
+		super(name, isMortgaged, price);
+		this.isTrainDepotBuilt = isTrainDepotBuilt;
 		// TODO Auto-generated constructor stub
 	}
 
@@ -94,10 +94,12 @@ public class RailRoadSquare extends BuyableSquare {
 		
 		try {
 			String name = squareAsJSON.getString("name");
+			boolean isMortgaged = squareAsJSON.getBoolean("isMortgaged");
+			boolean isTrainDepotBuilt = squareAsJSON.getBoolean("isTrainDepotBuilt");
 			int price = squareAsJSON.getInt("price");
-			railRoadSquare = new RailRoadSquare(name, price);
+			railRoadSquare = new RailRoadSquare(name, isMortgaged, isTrainDepotBuilt, price);
 		} catch (Exception e) {
-			
+			e.printStackTrace();
 		}
 		
 		return railRoadSquare;

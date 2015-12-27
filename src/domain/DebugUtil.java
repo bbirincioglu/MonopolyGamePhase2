@@ -12,8 +12,9 @@ public class DebugUtil {
 			String name = playerAsJSON.getString("name");
 			int money = playerAsJSON.getInt("money");
 			
-			String cards = playerAsJSON.getString("cards");
 			String squares = playerAsJSON.getString("squares");
+			String cards = playerAsJSON.getString("cards");
+			String stocks = playerAsJSON.getString("stocks");
 			String currentLocation = playerAsJSON.getString("currentLocation");
 			
 			int die1Value = playerAsJSON.getInt("die1Value");
@@ -23,12 +24,21 @@ public class DebugUtil {
 			Player player = new Player(name, money);
 			player.moveImmediate(monopolyBoard.getSquare(currentLocation));
 			buySquares(player, bank, squares);
-			putDiceValues(cup, die1Value, die2Value, speedDieValue);
+			buyStocks(player, bank, stocks);
 			//pickCards(player, monopolyBoard, cards);
+			putDiceValues(cup, die1Value, die2Value, speedDieValue);
 			
 			players.add(player);
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+	}
+	
+	private static void buyStocks(Player player, Bank bank, String stocks) {
+		ArrayList<String> stockNames = mySplit(stocks, ':');
+		
+		for (String stockName : stockNames) {
+			player.buyStock(bank, bank.getStock(stockName), 0);
 		}
 	}
 	

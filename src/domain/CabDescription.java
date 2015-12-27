@@ -50,6 +50,4 @@ public class CabDescription {
 		CabDescription desc=new CabDescription(rents, mortgageValue);
 		return desc;
 	}
-	
-
 }

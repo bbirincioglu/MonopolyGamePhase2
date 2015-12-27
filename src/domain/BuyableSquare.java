@@ -1,14 +1,14 @@
 package domain;
 public abstract class BuyableSquare extends Square {
-	
+	private static final String[] FIELD_NAMES = {"price", "isMortgaged", "owner"};
 	private int price;
 	private boolean isMortgaged;
 	private Player owner;
 	
-	public BuyableSquare(String name, int price) {
+	public BuyableSquare(String name, boolean isMortgaged, int price) {
 		super(name);
+		this.isMortgaged = isMortgaged;
 		this.price=price;
-		this.isMortgaged=false;
 		this.owner=null;	
 		// TODO Auto-generated constructor stub
 	}
@@ -71,6 +71,22 @@ public abstract class BuyableSquare extends Square {
 						Player buyer = gameController.getPlayers().get(maximumBidIndex);
 						buyer.buySquare(bank, this, maximumBid);
 					}
+				}
+			} else {
+				int[] bids = DialogBuilder.auctionDialog(gameController.getPlayers(), this);
+				int maximumBid = bids[0];
+				int maximumBidIndex = 0;
+				
+				for (int i = 1; i < bids.length; i++) {
+					if (bids[i] > maximumBid) {
+						maximumBid = bids[i];
+						maximumBidIndex = i;
+					}
+				}
+				
+				if (maximumBid >= getPrice() / 2) {
+					Player buyer = gameController.getPlayers().get(maximumBidIndex);
+					buyer.buySquare(bank, this, maximumBid);
 				}
 			}
 		} else {
