@@ -16,12 +16,7 @@ import domain.RailRoadSquare;
 import domain.Stock;
 
 public class CheckerTest {
-
-	@Test
-	public void testChecker() {
-		fail("Not yet implemented");
-	}
-
+	
 	@Test
 	public void testCheckBuySquare0() {
 		GameController gameController = GameController.getNewInstanceEachTime();
@@ -104,11 +99,6 @@ public class CheckerTest {
 		square.setTrainDepotBuilt(true);
 		
 		assertEquals(Checker.SQUARE_HAS_BUILDING_ERROR, checker.checkBuySquare(buyer, seller, square, square.getPrice()));
-	}
-
-	@Test
-	public void testCheckSellSquare() {
-		fail("Not yet implemented");
 	}
 	
 	@Test
@@ -420,11 +410,6 @@ public class CheckerTest {
 		assertEquals(Checker.TOO_MUCH_IMPROVEMENT_ERROR, checker.checkBuyBuilding(square));
 	}
 	
-	@Test
-	public void testCheckSellBuilding() {
-		fail("Not yet implemented");
-	}
-
 	@Test
 	public void testCheckBuyTrainDepot0() {
 		GameController gameController = GameController.getNewInstanceEachTime();

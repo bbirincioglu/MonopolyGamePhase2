@@ -11,12 +11,6 @@ import domain.MonopolyBoard;
 import domain.Square;
 
 public class MonopolyBoardTest {
-
-	@Test
-	public void testMonopolyBoard() {
-		fail("Not yet implemented");
-	}
-
 	@Test
 	public void testGetSquare0() {
 		String squareName = "ORIENTAL AVENUE";
