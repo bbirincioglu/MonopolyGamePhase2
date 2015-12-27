@@ -11,6 +11,7 @@ public class Bonus extends Square{
 	 * Constructor with name
 	 * @param name
 	 */
+	
 	public Bonus(String name) {
 		super(name);
 		// TODO Auto-generated constructor stub
