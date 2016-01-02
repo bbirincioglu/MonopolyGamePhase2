@@ -61,4 +61,12 @@ public class UtilitySquare extends BuyableSquare{
 	public int getMortgageValue() {
 		return getDescription().getMortgageValue();
 	}
+	
+	public void applySavedData(String savedData) {
+		setMortgaged(Boolean.valueOf(savedData.split(";")[1]));
+	}
+	
+	public String convertToSavedData() {
+		return getName() + ";" + isMortgaged();
+	}
 }

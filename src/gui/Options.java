@@ -423,10 +423,12 @@ public class Options extends JPanel {
 							selectablesPanel.addCard(card);
 						}
 					} else if (buttonText.equals("Add Stock")) {
-						String stock = selectablesPanel.removeSelectedStock();
-						
-						if (stock != null && !stock.equals("")) {
-							selectedPlayerPanel.addStock(stock);
+						if (selectedPlayerPanel.getStocks().getItemCount() != 6) {
+							String stock = selectablesPanel.removeSelectedStock();
+							
+							if (stock != null && !stock.equals("")) {
+								selectedPlayerPanel.addStock(stock);
+							}
 						}
 					} else if (buttonText.equals("Remove Stock")) {
 						String stock = selectedPlayerPanel.removeSelectedStock();

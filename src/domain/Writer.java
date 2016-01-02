@@ -27,4 +27,16 @@ public class Writer {
 			e.printStackTrace();
 		}
 	}
+	
+	public void writeGameData(String fileName, JSONObject gameAsJSON) {
+		try {
+			File file = new File(fileName);
+			FileWriter fileWriter = new FileWriter(file);
+			BufferedWriter writer = new BufferedWriter(fileWriter);
+			writer.write(gameAsJSON.toString());
+			writer.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }

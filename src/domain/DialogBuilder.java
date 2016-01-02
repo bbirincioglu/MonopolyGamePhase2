@@ -17,6 +17,7 @@ import gui.SteppedComboBox;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -37,6 +38,28 @@ public class DialogBuilder {
 	
 	public static void informativeDialog(String information) {
 		JOptionPane.showMessageDialog(getMainFrame(), information);
+	}
+	
+	public static Square busTicketDialog(Player currentPlayer, MonopolyBoard monopolyBoard) {
+		Square currentLocation = currentPlayer.getCurrentLocation();
+		ArrayList<Square> squaresAtSameLevel = monopolyBoard.getSquaresAtSameLevel(currentLocation);
+		String[] options = new String[squaresAtSameLevel.size() - 1];
+		int index = 0;
+		
+		for (Square squareAtSameLevel : squaresAtSameLevel) {
+			if (!currentLocation.equals(squareAtSameLevel)) {
+				options[index] = squareAtSameLevel.getName();
+				index++;
+			}
+		}
+		
+		JLabel informationLabel = ComponentBuilder.composeDefaultLabel("PLEASE PICK A SQUARE FROM THE CURRENT LEVEL.");
+		JComboBox squareNameComboBox = ComponentBuilder.composeDefaultComboBox(200, 40, options, options[0], null);
+		JPanel container = ComponentBuilder.composeDummyContainer(new JComponent[]{informationLabel, squareNameComboBox}, new GridLayout(2, 1), null);
+				
+		JOptionPane.showMessageDialog(getMainFrame(), container);
+		Square selectedSquare = monopolyBoard.getSquare(squareNameComboBox.getSelectedItem().toString());
+		return selectedSquare;
 	}
 	
 	public static int busDialog(int die1Value, int die2Value) {

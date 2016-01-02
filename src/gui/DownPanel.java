@@ -227,7 +227,7 @@ public class DownPanel extends JPanel {
 							} else if (result.equals("Remove Mortgage")) {
 								gameController.doRemoveMortgage(stockName, 0);
 							} else if (result.equals("Sell")) {
-								//gameController.doSell(stockName);
+								gameController.doSellStock(stockName);
 							}
 						} else {
 							squareName = name;

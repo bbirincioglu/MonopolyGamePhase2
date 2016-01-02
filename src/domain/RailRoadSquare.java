@@ -64,6 +64,13 @@ public class RailRoadSquare extends BuyableSquare {
 		int diceValuesTotal = GameController.getInstance().getCup().getDiceValuesTotal();
 		
 		if ((diceValuesTotal % 2) == 0) {
+			try {
+				Thread.sleep(Piece.SLEEP_TIME);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 			piece.moveImmediate(getUp());
 		}
 	}
@@ -73,6 +80,13 @@ public class RailRoadSquare extends BuyableSquare {
 		int diceValuesTotal = GameController.getInstance().getCup().getDiceValuesTotal();
 		
 		if ((diceValuesTotal % 2) == 0) {
+			try {
+				Thread.sleep(Piece.SLEEP_TIME);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 			piece.moveImmediate(getUp());
 		}
 	}
@@ -107,5 +121,21 @@ public class RailRoadSquare extends BuyableSquare {
 	
 	public int getMortgageValue() {
 		return getDescription().getMortgageValue();
+	}
+
+	@Override
+	public void applySavedData(String savedData) {
+		// TODO Auto-generated method stub
+		String[] savedDataArray = savedData.split(";");
+		boolean isMortgaged = Boolean.valueOf(savedDataArray[1]);
+		boolean isTrainDepotBuilt = Boolean.valueOf(savedDataArray[2]);
+		setMortgaged(isMortgaged);
+		setTrainDepotBuilt(isTrainDepotBuilt);
+	}
+
+	@Override
+	public String convertToSavedData() {
+		// TODO Auto-generated method stub
+		return getName() + ";" + isMortgaged() + ";" + isTrainDepotBuilt();
 	}
 }

@@ -450,7 +450,7 @@ public class MonopolyBoard {
 	 * @return json object representation of this object.
 	 */
 	
-	public JSONObject toJSON() {
+	/*public JSONObject toJSON() {
 		JSONObject monopolyBoardAsJSON = new JSONObject();
 		
 		try {
@@ -468,7 +468,7 @@ public class MonopolyBoard {
 		}
 		
 		return monopolyBoardAsJSON;
-	}
+	}*/
 	
 	/**
 	 * Returns string representation of this object.
@@ -476,7 +476,33 @@ public class MonopolyBoard {
 	 * @return string representation of this object.
 	 */
 	
-	public String toString() {
+	/*public String toString() {
 		return toJSON().toString();
+	}*/
+	
+	public ArrayList<Square> getSquaresAtSameLevel(Square square) {
+		ArrayList<Square> outerSquares = getOuterSquares();
+		ArrayList<Square> middleSquares = getMiddleSquares();
+		ArrayList<Square> innerSquares = getInnerSquares();
+		
+		for (Square squareInList : outerSquares) {
+			if (square.equals(squareInList)) {
+				return outerSquares;
+			}
+		}
+		
+		for (Square squareInList : middleSquares) {
+			if (square.equals(squareInList)) {
+				return middleSquares;
+			}
+		}
+		
+		for (Square squareInList : innerSquares) {
+			if (square.equals(squareInList)) {
+				return innerSquares;
+			}
+		}
+		
+		return null;
 	}
 }

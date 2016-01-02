@@ -60,4 +60,16 @@ public class CabSquare extends BuyableSquare{
 	public int getMortgageValue() {
 		return getDescription().getMortgageValue();
 	}
+
+	@Override
+	public void applySavedData(String savedData) {
+		// TODO Auto-generated method stub
+		setMortgaged(Boolean.valueOf(savedData.split(";")[1]));
+	}
+
+	@Override
+	public String convertToSavedData() {
+		// TODO Auto-generated method stub
+		return getName() + ";" + isMortgaged();
+	}
 }

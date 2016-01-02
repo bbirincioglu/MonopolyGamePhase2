@@ -1,4 +1,6 @@
 package domain;
+import java.util.ArrayList;
+
 import org.json.JSONObject;
 
 
@@ -16,6 +18,12 @@ public class StockExchange extends Square {
 		GameController gameController = GameController.getInstance();
 		Bank bank = gameController.getMonopolyBoard().getBank();
 		Checker checker = gameController.getChecker();
+		
+		ArrayList<Player> players = gameController.getPlayers();
+		
+		for (Player player : gameController.getPlayers()) {
+			player.collectAllDividents();
+		}
 		
 		if (bank.isUnownedStockLeft()) {
 			String stockName = DialogBuilder.pickAnUnownedStockDialog(bank);

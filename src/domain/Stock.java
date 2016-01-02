@@ -135,4 +135,12 @@ public class Stock {
 		
 		return stockAsJSON;
 	}
+	
+	public void applySavedData(String savedData) {
+		setMortgaged(Boolean.valueOf(savedData.split(";")[1]));
+	}
+	
+	public String convertToSavedData() {
+		return getName() + ";" + isMortgaged();
+	}
 }

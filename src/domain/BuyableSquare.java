@@ -97,4 +97,7 @@ public abstract class BuyableSquare extends Square {
 			}
 		}
 	}
+	
+	public abstract void applySavedData(String savedData);
+	public abstract String convertToSavedData();
 }

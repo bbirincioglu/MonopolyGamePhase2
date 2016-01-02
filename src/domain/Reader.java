@@ -14,6 +14,22 @@ public class Reader {
 		
 	}
 	
+	public static JSONObject readGameData(String fileName) {
+		JSONObject gameAsJSON = new JSONObject();
+		
+		try {
+			File file = new File(fileName);
+			FileReader fileReader = new FileReader(file);
+			BufferedReader reader = new BufferedReader(fileReader);
+			gameAsJSON = new JSONObject(reader.readLine());
+			reader.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return gameAsJSON;
+	}
+	
 	public static ArrayList<JSONObject> read(String fileName) {
 		ArrayList<JSONObject> jsonObjects = new ArrayList<JSONObject>();
 		

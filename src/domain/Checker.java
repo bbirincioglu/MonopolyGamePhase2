@@ -19,6 +19,7 @@ public class Checker {
 	public static final String TOO_MUCH_DECLINE_ERROR = "Too much decline compared to other squares.";
 	public static final String MONOPOLY_ERROR = "You don't have monopoly";
 	public static final String MAJORITY_OWNERSHIP_ERROR = "You don't have majority ownership";
+	public static final String STOCK_LIMIT_REACHED_ERROR = "You already have 6 shares of various companies. You can't buy more.";
 	
 	public Checker() {		
 	}
@@ -215,32 +216,34 @@ public class Checker {
 		return result;
 	}
 	
-	public String checkBuyStock(Player buyer, Object seller, Stock stock, int payment) {
+	public String checkBuyStock(Object buyer, Object seller, Stock stock, int payment) {
 		String result = "true";
 		
-		if (seller instanceof Bank) {
-			Bank sellerAsBank = (Bank) seller;
+		if (buyer instanceof Player) {
+			Player buyerAsPlayer = (Player) buyer;
 			
-			if (buyer.getMoney() < payment) {
+			if (buyerAsPlayer.getStocks().size() == 6) {
+				result = STOCK_LIMIT_REACHED_ERROR;
+			} else if (buyerAsPlayer.getMoney() < payment) {
 				result = NOT_ENOUGH_MONEY_ERROR;
 			}
-		} /*else {
+		} else {
 			Player sellerAsPlayer = (Player) seller;
 			
-			if (buyer.equals(sellerAsPlayer)) {
-				result = ALREADY_OWNED_ERROR;
-			} else if (buyer.getMoney() < payment) {
-				result = NOT_ENOUGH_MONEY_ERROR;
+			if (stock == null) {
+				result = NOT_OWNED_ERROR;
+			} else if (stock.isMortgaged()) {
+				result = "The stock is mortgaged. You can't sell it.";
 			}
-		}*/
+		}
 		
 		return result;
 	}
 	
-	/*public String checkSellStock(Player buyer, Object seller, Stock stock, int payment) {
+	public String checkSellStock(Player seller, Bank buyer, Stock stock, int payment) {
 		String result = checkBuyStock(buyer, seller, stock, payment);
 		return result;
-	}*/
+	}
 	
 	public String checkApplyMortgage(Stock stock) {
 		String result = "true";

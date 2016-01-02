@@ -343,9 +343,9 @@ public class Bank {
 	 * @return the string representation of this object.
 	 */
 	
-	public String toString() {
+	/*public String toString() {
 		return toJSON().toString();
-	}
+	}*/
 	
 	/**
 	 * Returns the json object representation of this object.
@@ -353,7 +353,7 @@ public class Bank {
 	 * @return the json object representation of this object.
 	 */
 	
-	public JSONObject toJSON() {
+	/*public JSONObject toJSON() {
 		JSONObject bankAsJSON = new JSONObject();
 		
 		try {
@@ -366,7 +366,7 @@ public class Bank {
 		}
 		
 		return bankAsJSON;
-	}
+	}*/
 	
 	/**
 	 * Checks if concrete representation of this object is correct.

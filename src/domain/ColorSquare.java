@@ -331,4 +331,18 @@ public class ColorSquare extends BuyableSquare {
 		
 		return buildingsInfo;
 	}
+	
+	public void applySavedData(String savedData) {
+		String[] savedDataArray = savedData.split(";");
+		String name = savedDataArray[0];
+		boolean isMortgaged = Boolean.valueOf(savedDataArray[1]);
+		int buildingNum = Integer.valueOf(savedDataArray[2]);
+		setMortgaged(isMortgaged);
+		setBuildingNum(buildingNum);
+	}
+	
+	public String convertToSavedData() {
+		String savedData = getName() + ";" + isMortgaged() + ";" + getBuildingNum();
+		return savedData;
+	}
 }

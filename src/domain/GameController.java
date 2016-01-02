@@ -1,4 +1,5 @@
 package domain;
+import java.applet.Applet;
 import java.util.ArrayList;
 
 import org.json.JSONObject;
@@ -17,6 +18,7 @@ public class GameController {
 	
 	private static boolean isRollButtonClicked;
 	private static boolean isGameOver;
+	private static boolean isLoad;
 	
 	private GameController() {
 		setObservers(new ArrayList<ControllerObserver>());
@@ -33,12 +35,17 @@ public class GameController {
 		Reader reader = new Reader();
 		GameOptions options = GameOptions.fromJSON(reader.read("options.txt").get(0));
 		
-		if (options.isDebugging()) {
-			System.out.println("is debugging");
-			startWithDebugging(options, reader.read("debug.txt"));
-		} else {
-			System.out.println("is not debugging");
+		if (isLoad()) {
+			System.out.println("is loading.");
 			startWithNotDebugging(options);
+		} else {
+			if (options.isDebugging()) {
+				System.out.println("is debugging");
+				startWithDebugging(options, reader.read("debug.txt"));
+			} else {
+				System.out.println("is not debugging");
+				startWithNotDebugging(options);
+			}
 		}
 		
 		new Thread(new GameLoop()).start();
@@ -176,6 +183,21 @@ public class GameController {
 			currentPlayer.sellTrainDepot(square);
 		} else {
 			
+		}
+	}
+	
+	public void doSellStock(String stockName) {
+		Player currentPlayer = getCurrentPlayer();
+		Bank bank = getMonopolyBoard().getBank();
+		Checker checker = getChecker();
+		
+		Stock stock = currentPlayer.getStock(stockName);
+		String result = checker.checkSellStock(currentPlayer, bank, stock, stock.getParValue());
+		
+		if (result.equals("true")) {
+			currentPlayer.sellStock(bank, stock, stock.getParValue() / 2);
+		} else {
+			DialogBuilder.informativeDialog(result);
 		}
 	}
 	
@@ -317,6 +339,14 @@ public class GameController {
 
 	public static void setGameOver(boolean isGameOver) {
 		GameController.isGameOver = isGameOver;
+	}
+	
+	public static void setLoad(boolean isLoad) {
+		GameController.isLoad = isLoad;
+	}
+	
+	public static boolean isLoad() {
+		return isLoad;
 	}
 
 	public ArrayList<ControllerObserver> getObservers() {
@@ -485,6 +515,14 @@ public class GameController {
 		} else {
 			
 		}
+	}
+	
+	public void doSaveGame() {
+		SaveLoadUtil.saveGame(this);
+	}
+	
+	public void doLoadGame() {
+		SaveLoadUtil.loadGame(this);
 	}
 	
 	public static GameController getNewInstanceEachTime() {

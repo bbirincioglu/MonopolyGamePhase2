@@ -13,11 +13,17 @@ public class GameBoard extends JPanel {
 	private MonopolyBoardView monopolyBoardView;
 	private DownPanel downPanel;
 	
-	public GameBoard() {
+	public GameBoard(boolean isLoad) {
 		super();
 		setLayout(new GridBagLayout());
 		
+		GameController.setLoad(isLoad);
 		GameController gameController = GameController.getInstance();
+		
+		if(isLoad) {
+			gameController.doLoadGame();
+		}
+		
 		MonopolyBoard monopolyBoard = gameController.getMonopolyBoard();
 		ArrayList<Player> players = gameController.getPlayers();
 		

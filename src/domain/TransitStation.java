@@ -39,6 +39,13 @@ public class TransitStation extends Square {
 		int diceValuesTotal = cup.getDiceValuesTotal();
 		
 		if ((diceValuesTotal % 2) == 0) {
+			try {
+				Thread.sleep(Piece.SLEEP_TIME);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 			piece.moveImmediate(getDown());
 		}
 	}
@@ -56,6 +63,13 @@ public class TransitStation extends Square {
 		int diceValuesTotal = cup.getDiceValuesTotal();
 		
 		if ((diceValuesTotal % 2) == 0) {
+			try {
+				Thread.sleep(Piece.SLEEP_TIME);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 			piece.moveImmediate(getDown());
 		}
 	}

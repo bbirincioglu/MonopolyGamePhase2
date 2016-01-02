@@ -11,6 +11,7 @@ import org.json.JSONObject;
 
 public class Piece {
 	//@Overview: Piece is the moving tool of the player.
+	public static final int SLEEP_TIME = 250;
 	
 	private ArrayList<PieceObserver> pieceObservers;
 	private Player owner;
@@ -48,39 +49,35 @@ public class Piece {
 		//@modifies: this
 		//@effects: moves this according the stepNum given
 		
-		if (getDirection().equals(Direction.CLOCKWISE)) {
-			while (stepNum > 0) {
-				moveImmediate(getCurrentLocation().getNext());
-				stepNum = stepNum - 1;
-				
-				if (stepNum > 0) {
-					getCurrentLocation().passedOn(this);
+		try {
+			if (getDirection().equals(Direction.CLOCKWISE)) {
+				while (stepNum > 0) {
+					moveImmediate(getCurrentLocation().getNext());
+					stepNum = stepNum - 1;
+					
+					if (stepNum > 0) {
+						getCurrentLocation().passedOn(this);
+					}
+					
+					Thread.sleep(SLEEP_TIME);
 				}
-				
-				try {
-					Thread.sleep(250);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		} else {
-			while (stepNum > 0) {
-				moveImmediate(getCurrentLocation().getPrevious());
-				stepNum = stepNum - 1;
-				
-				if (stepNum > 0) {
-					getCurrentLocation().passedOn(this);
-				}
-				
-				try {
-					Thread.sleep(250);
-				} catch(Exception e) {
-					e.printStackTrace();
+			} else {
+				while (stepNum > 0) {
+					moveImmediate(getCurrentLocation().getPrevious());
+					stepNum = stepNum - 1;
+					
+					if (stepNum > 0) {
+						getCurrentLocation().passedOn(this);
+					}
+					
+					Thread.sleep(SLEEP_TIME);
 				}
 			}
+			
+			getCurrentLocation().landedOn(this);
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		
-		getCurrentLocation().landedOn(this);
 	}
 	
 	/**
@@ -96,32 +93,34 @@ public class Piece {
 		//@requires: square is not null 
 		//@modifies: this
 		//@effects: moves this to the square.
-		
-		if (getDirection().equals(Direction.CLOCKWISE)) {
-			while (!getCurrentLocation().equals(square)) {
-				moveImmediate(getCurrentLocation().getNext());
-				
-				if (!getCurrentLocation().equals(square)) {
-					getCurrentLocation().passedOn(this);
-				}
-				
-				try {
-					Thread.sleep(250);
-				} catch (Exception e) {
+		try {
+			if (getDirection().equals(Direction.CLOCKWISE)) {
+				while (!getCurrentLocation().equals(square)) {
+					moveImmediate(getCurrentLocation().getNext());
 					
+					if (!getCurrentLocation().equals(square)) {
+						getCurrentLocation().passedOn(this);
+					}
+					
+					Thread.sleep(SLEEP_TIME);
+				}
+			} else {
+				while (!getCurrentLocation().equals(square)) {
+					moveImmediate(getCurrentLocation().getPrevious());
+					
+					if (!getCurrentLocation().equals(square)) {
+						getCurrentLocation().passedOn(this);
+					}
+					
+					Thread.sleep(SLEEP_TIME);
 				}
 			}
-		} else {
-			while (!getCurrentLocation().equals(square)) {
-				moveImmediate(getCurrentLocation().getPrevious());
-				
-				if (!getCurrentLocation().equals(square)) {
-					getCurrentLocation().passedOn(this);
-				}
-			}
+			
+			getCurrentLocation().landedOn(this);
+		} catch (Exception e) {
+			e.printStackTrace();
+			
 		}
-		
-		getCurrentLocation().landedOn(this);
 	}
 	
 	/**

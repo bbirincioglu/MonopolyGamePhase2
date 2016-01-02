@@ -112,7 +112,7 @@ public class CardEvaluator {
 			}
 		}else if(action1.equals("bus ticket")){
 			currentPlayer.getCards().clear();
-			Square s = DialogBuilder.busTicketDialog();
+			Square s = DialogBuilder.busTicketDialog(currentPlayer, GameController.getInstance().getMonopolyBoard());
 			currentPlayer.move(s);
 		}else if(action1.equals("stock")){
 			if(details[0].equals("collect")){

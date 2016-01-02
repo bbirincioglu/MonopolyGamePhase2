@@ -1,5 +1,9 @@
 package domain;
 import java.util.ArrayList;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 /**
  * 
  * This class contains the necessary information about the player, stores his money, properties and state.
@@ -7,6 +11,8 @@ import java.util.ArrayList;
  */
 
 public class Player {
+	public static final String[] FIELD_NAMES = {"name", "money", "squares", "stocks", "cards", "currentLocation", "direction", "isInJail", "roundNumInJail"};
+	
 	private ArrayList<PlayerObserver> playerObservers;
 	private String name;
 	private int money;
@@ -546,6 +552,29 @@ public class Player {
 		notifyPlayerObservers();
 	}
 	
+	public void sellStock(Bank bank, Stock stock, int payment) {
+		receivePayment(payment);
+		getStocks().remove(stock);
+		bank.addStock(stock);
+		stock.setOwner(null);
+		notifyPlayerObservers();
+	}
+	
+	public Stock getStock(String name) {
+		Stock stockWanted = null;
+		
+		ArrayList<Stock> stocks = getStocks();
+		
+		for (Stock stock : stocks) {
+			if (stock.getName().equals(name)) {
+				stockWanted = stock;
+				break;
+			}
+		}
+		
+		return stockWanted;
+	}
+	
 	public void setRoundNumInJail(int roundNumInJail) {
 		//@modifies: this
 	    //@effects: sets given input  as the number of rounds spent in jail
@@ -579,4 +608,89 @@ public class Player {
 		
 		this.stocks = stocks;
 	}
+	
+		public boolean repOK(){
+
+		if(getName()==null || getSquares()==null || getStocks()==null || getCards()==null || getPiece()==null ){
+
+		return false;
+
+		}
+
+		ArrayList<BuyableSquare> sqrs=getSquares();
+
+		for(int i=1; i<sqrs.size(); i++){
+
+		Square sq1=sqrs.get(i);
+
+		for(int j=0; j<i; j++){
+
+		Square sq2=sqrs.get(j);
+
+		if(sq1.equals(sq2))
+
+		return false;
+
+		}
+
+		}
+
+		ArrayList<Stock> stcks=getStocks();
+
+		for(int i=1; i<stcks.size(); i++){
+
+		Stock st1=stcks.get(i);
+
+		for(int j=0; j<i; j++){
+
+		Stock st2=stcks.get(j);
+
+		if(st1.equals(st2))
+
+		return false;
+
+		}
+
+		}
+
+		ArrayList<Card> crds=getCards();
+
+		for(int i=1; i<crds.size(); i++){
+
+		Card cd1=crds.get(i);
+
+		for(int j=0; j<i; j++){
+
+		Card cd2=crds.get(j);
+
+		if(cd1.equals(cd2))
+
+		return false;
+
+		}
+
+		}
+		
+		return true;
+		}
+		
+		public JSONObject toJSON() {
+			JSONObject playerAsJSON = new JSONObject();
+			
+			try {
+				playerAsJSON.put(FIELD_NAMES[0], getName());
+				playerAsJSON.put(FIELD_NAMES[1], getMoney());
+				playerAsJSON.put(FIELD_NAMES[2], SaveLoadUtil.composeString(getSquares(), ':'));
+				playerAsJSON.put(FIELD_NAMES[3], SaveLoadUtil.composeString(getStocks(), ':'));
+				playerAsJSON.put(FIELD_NAMES[4], SaveLoadUtil.composeString(getCards(), ':'));
+				playerAsJSON.put(FIELD_NAMES[5], getCurrentLocation().getName());
+				playerAsJSON.put(FIELD_NAMES[6], getDirection());
+				playerAsJSON.put(FIELD_NAMES[7], isInJail());
+				playerAsJSON.put(FIELD_NAMES[8], getRoundNumInJail());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+			return playerAsJSON;
+		}	
 }

@@ -2,7 +2,11 @@ package domain;
 
 import java.util.ArrayList;
 
+import org.json.JSONObject;
+
 public class Cup {
+	private static final String[] FIELD_NAMES = new String[]{"die1Value", "die2Value", "speedDieValue"};
+	
 	private Die die1;
 	private Die die2;
 	private Die speedDie;
@@ -13,6 +17,17 @@ public class Cup {
 		setDie2(new Die());
 		setSpeedDie(new Die());
 		setDebugValues(new ArrayList<int[]>());
+	}
+	
+	public Cup(int die1Value, int die2Value, int speedDieValue) {
+		setDie1(new Die());
+		setDie2(new Die());
+		setSpeedDie(new Die());
+		setDebugValues(new ArrayList<int[]>());
+		
+		getDie1().setFaceValue(die1Value);
+		getDie2().setFaceValue(die2Value);
+		getSpeedDie().setFaceValue(speedDieValue);
 	}
 	
 	public void roll2Dice() {
@@ -155,5 +170,38 @@ public class Cup {
 		}
 		
 		setDebugValues(newDebugValues);
+	}
+	
+	public String toString() {
+		return toJSON().toString();
+	}
+	
+	public JSONObject toJSON() {
+		JSONObject cupAsJSON = new JSONObject();
+		
+		try {
+			cupAsJSON.put(FIELD_NAMES[0], getDie1().getFaceValue());
+			cupAsJSON.put(FIELD_NAMES[1], getDie2().getFaceValue());
+			cupAsJSON.put(FIELD_NAMES[2], getSpeedDie().getFaceValue());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return cupAsJSON;
+	}
+	
+	public static Cup fromJSON(JSONObject cupAsJSON) {
+		Cup cup = null;
+		
+		try {
+			int die1Value = cupAsJSON.getInt(FIELD_NAMES[0]);
+			int die2Value = cupAsJSON.getInt(FIELD_NAMES[1]);
+			int speedDieValue = cupAsJSON.getInt(FIELD_NAMES[2]);
+			cup = new Cup(die1Value, die2Value, speedDieValue);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return cup;
 	}
 }

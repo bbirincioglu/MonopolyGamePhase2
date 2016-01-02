@@ -32,6 +32,7 @@ public class MonopolyBoardView extends JPanel {
 	private static final int ROW_NUM = 15;
 	private static final int COLUMN_NUM = 15;
 	private PoolView poolView;
+	private SaveButton saveButton;
 	private ArrayList<SquareView> outerSquareViews;
 	private ArrayList<SquareView> middleSquareViews;
 	private ArrayList<SquareView> innerSquareViews;
@@ -51,7 +52,7 @@ public class MonopolyBoardView extends JPanel {
 		Reader reader = new Reader();
 		GameOptions options = GameOptions.fromJSON(reader.read("options.txt").get(0));
 		
-		if (options.isDebugging()) {
+		if (options.isDebugging() || GameController.isLoad()) {
 			for (int i = 0; i < players.size(); i++) {
 				Player player = players.get(i);
 				PieceView pieceView = new PieceView(player.getPiece());
@@ -170,6 +171,8 @@ public class MonopolyBoardView extends JPanel {
 					
 					if (i == 7 && j == 7) {
 						emptyPanel.add(getPoolView());
+					} else if (i == 8 && j == 7) {
+						emptyPanel.add(getSaveButton());
 					}
 					
 					add(emptyPanel, constraints);
@@ -190,6 +193,7 @@ public class MonopolyBoardView extends JPanel {
 		initialize(getInnerSquareViews(), innerSquares);
 		
 		setPoolView(new PoolView(bank));
+		setSaveButton(new SaveButton());
 	}
 	
 	private void initialize(ArrayList<SquareView> squareViews, ArrayList<Square> squares) {
@@ -492,6 +496,14 @@ public class MonopolyBoardView extends JPanel {
 		return poolView;
 	}
 	
+	public void setSaveButton(SaveButton saveButton) {
+		this.saveButton = saveButton;
+	}
+	
+	public SaveButton getSaveButton() {
+		return saveButton;
+	}
+	
 	public class PoolView extends JButton implements BankObserver {
 		public PoolView(Bank bank) {
 			super();
@@ -499,6 +511,7 @@ public class MonopolyBoardView extends JPanel {
 			setEnabled(false);
 			setHorizontalAlignment(CENTER);
 			bank.addBankObserver(this);
+			bank.notifyBankObservers();
 		}
 		
 		public void update(Bank bank) {
