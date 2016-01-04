@@ -20,6 +20,7 @@ import javax.swing.SwingConstants;
 
 import domain.BuyableSquare;
 import domain.CabSquare;
+import domain.Card;
 import domain.ColorSquare;
 import domain.ControllerObserver;
 import domain.Cup;
@@ -176,8 +177,8 @@ public class DownPanel extends JPanel {
 		
 		private class ComboBoxPanel extends JPanel {
 			private static final int ROW_NUM = 2;
-			private static final int COLUMN_NUM = 5;
-			public final String[] LABELS = {"COLORS", "UTILITIES", "CABS", "RAILROADS", "STOCKS"};
+			private static final int COLUMN_NUM = 6;
+			public final String[] LABELS = {"COLORS", "UTILITIES", "CABS", "RAILROADS", "STOCKS", "CARDS"};
 			private ArrayList<SteppedComboBox> comboBoxes;
 			
 			public ComboBoxPanel() {
@@ -194,8 +195,15 @@ public class DownPanel extends JPanel {
 							SteppedComboBox comboBox = new SteppedComboBox(new String[]{});
 							comboBox.addMouseListener(new ComboBoxListener());
 							comboBox.setName(LABELS[j]);
-							comboBox.setPreferredSize(new Dimension(50, 10));
-							comboBox.setPopupWidth(200);
+							comboBox.setPreferredSize(new Dimension(40, 10));
+							
+							if (j == COLUMN_NUM - 1) {
+								comboBox.setPopupWidth(300);
+							} else {
+								comboBox.setPopupWidth(200);
+							}
+							
+							
 							getComboBoxes().add(comboBox);
 							add(comboBox);
 						}
@@ -217,10 +225,11 @@ public class DownPanel extends JPanel {
 						String squareName;
 						String stockName;
 						
-						if (comboBoxName.equals(getComboBoxPanel().getLABELS()[4])) {
+						if (comboBoxName.equals(getComboBoxPanel().getLABELS()[5])) {
+							System.out.println("clicked cards");
+						} else if (comboBoxName.equals(getComboBoxPanel().getLABELS()[4])) {
 							stockName = name;
 							String result = DialogBuilder.stockDialog(stockName);
-							DialogBuilder.informativeDialog(result);
 							
 							if (result.equals("Apply Mortgage")) {
 								gameController.doApplyMortgage(stockName, 0);
@@ -310,6 +319,7 @@ public class DownPanel extends JPanel {
 			int money = player.getMoney();
 			ArrayList<BuyableSquare> squares = player.getSquares();
 			ArrayList<Stock> stocks = player.getStocks();
+			ArrayList<Card> cards = player.getCards();
 			
 			JLabel moneyLabel = getMoneyLabel();
 			moneyLabel.setText("$" + money);
@@ -344,6 +354,39 @@ public class DownPanel extends JPanel {
 				String name = stock.getName();
 				comboBox.addItem(name);
 			}
+			
+			comboBox = comboBoxPanel.findComboBoxByName(comboBoxPanel.getLABELS()[5]);
+			size = cards.size();
+			
+			for (int i = 0; i < size; i++) {
+				Card card = cards.get(i);
+				ArrayList<String> splittedContent = mySplit(card.getContent(), '.');
+				String visibleContent = splittedContent.get(splittedContent.size() - 1);
+				comboBox.addItem(visibleContent);
+			}
+		}
+		
+		private ArrayList<String> mySplit(String text, char splitChar) {
+			ArrayList<String> splittedText = new ArrayList<String>();
+			String temp = "";
+			int length = text.length();
+			
+			for (int i = 0; i < length; i++) {
+				char charAtI = text.charAt(i);
+				
+				if (charAtI == splitChar) {
+					splittedText.add(temp);
+					temp = "";
+				} else {
+					temp += charAtI;
+				}
+			}
+			
+			if (temp != null && !temp.equals("")) {
+				splittedText.add(temp);
+			}
+			
+			return splittedText;
 		}
 		
 		private void emptyComboBoxes(ArrayList<SteppedComboBox> comboBoxes) {

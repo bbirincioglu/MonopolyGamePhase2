@@ -136,7 +136,7 @@ public class CardEvaluator {
 				MonopolyBoard mp =GameController.getInstance().getMonopolyBoard();
 				Square s = currentPlayer.getCurrentLocation();
 				if(mp.getInnerSquares().contains(s))
-					break;
+					//break;
 				if(mp.getMiddleSquares().contains(s)){
 					int index = mp.getMiddleSquares().indexOf(s);
 					int q = index/10;

@@ -94,12 +94,11 @@ public class GameController {
 		System.out.println("doApplyMortgage");
 		Checker checker = getChecker();
 		String result = checker.checkApplyMortgage(square);
-		DialogBuilder.informativeDialog(result);
 		
 		if (result.equals("true")) {
 			currentPlayer.applyMortgageTo(square);
 		} else {
-			
+			DialogBuilder.informativeDialog(result);
 		}
 	}
 	
@@ -109,12 +108,11 @@ public class GameController {
 		System.out.println("doRemoveMortgage");
 		Checker checker = getChecker();
 		String result = checker.checkRemoveMortgage(square);
-		DialogBuilder.informativeDialog(result);
 		
 		if (result.equals("true")) {
 			currentPlayer.removeMortgageFrom(square);
 		} else {
-			
+			DialogBuilder.informativeDialog(result);
 		}
 	}
 	
@@ -124,7 +122,6 @@ public class GameController {
 		System.out.println("doBuyBuilding");
 		Checker checker = getChecker();
 		String result = checker.checkBuyBuilding(square);
-		DialogBuilder.informativeDialog(result);
 		
 		if (result.equals("house")) {
 			currentPlayer.buyHouse(square);
@@ -133,7 +130,7 @@ public class GameController {
 		} else if (result.equals("skyscraper")) {
 			currentPlayer.buySkyscraper(square);
 		} else {
-			
+			DialogBuilder.informativeDialog(result);
 		}
 	}
 	
@@ -143,7 +140,6 @@ public class GameController {
 		System.out.println("doSellBuilding");
 		Checker checker = getChecker();
 		String result = checker.checkSellBuilding(square);
-		DialogBuilder.informativeDialog(result);
 		
 		if (result.equals("house")) {
 			currentPlayer.sellHouse(square);
@@ -152,7 +148,7 @@ public class GameController {
 		} else if (result.equals("skyscraper")) {
 			currentPlayer.sellSkyscraper(square);
 		} else {
-			
+			DialogBuilder.informativeDialog(result);
 		}
 	}
 	
@@ -162,12 +158,11 @@ public class GameController {
 		System.out.println("doBuyTrainDepot");
 		Checker checker = getChecker();
 		String result = checker.checkBuyTrainDepot(square);
-		DialogBuilder.informativeDialog(result);
 		
 		if (result.equals("true")) {
 			currentPlayer.buyTrainDepot(square);
 		} else {
-			
+			DialogBuilder.informativeDialog(result);
 		}
 	}
 	
@@ -177,12 +172,11 @@ public class GameController {
 		System.out.println("doSellTrainDepot");
 		Checker checker = getChecker();
 		String result = checker.checkSellTrainDepot(square);
-		DialogBuilder.informativeDialog(result);
 		
 		if (result.equals("true")) {
 			currentPlayer.sellTrainDepot(square);
 		} else {
-			
+			DialogBuilder.informativeDialog(result);
 		}
 	}
 	
@@ -196,6 +190,72 @@ public class GameController {
 		
 		if (result.equals("true")) {
 			currentPlayer.sellStock(bank, stock, stock.getParValue() / 2);
+		} else {
+			DialogBuilder.informativeDialog(result);
+		}
+	}
+	
+	public void doApplyMortgage(String stockName, int dummy) {
+		Player currentPlayer = getCurrentPlayer();
+		Stock stock = null;
+		ArrayList<Player> players = getPlayers();
+		int size = players.size();
+		
+		for (int i = 0; i < size; i++) {
+			Player player = players.get(i);
+			ArrayList<Stock> stocks = player.getStocks();
+			int stocksSize = stocks.size();
+			
+			for (int j = 0; j < stocksSize; j++) {
+				if (stocks.get(j).getName().equals(stockName)) {
+					stock = stocks.get(j);
+					break;
+				}
+			}
+			
+			if (stock != null) {
+				break;
+			}
+		}
+		
+		Checker checker = getChecker();
+		String result = checker.checkApplyMortgage(stock);
+		
+		if (result.equals("true")) {
+			currentPlayer.applyMortgageTo(stock);
+		} else {
+			DialogBuilder.informativeDialog(result);
+		}
+	}
+	
+	public void doRemoveMortgage(String stockName, int dummy) {
+		Player currentPlayer = getCurrentPlayer();
+		Stock stock = null;
+		ArrayList<Player> players = getPlayers();
+		int size = players.size();
+		
+		for (int i = 0; i < size; i++) {
+			Player player = players.get(i);
+			ArrayList<Stock> stocks = player.getStocks();
+			int stocksSize = stocks.size();
+			
+			for (int j = 0; j < stocksSize; j++) {
+				if (stocks.get(j).getName().equals(stockName)) {
+					stock = stocks.get(j);
+					break;
+				}
+			}
+			
+			if (stock != null) {
+				break;
+			}
+		}
+		
+		Checker checker = getChecker();
+		String result = checker.checkRemoveMortgage(stock);
+		
+		if (result.equals("true")) {
+			currentPlayer.removeMortgageFrom(stock);
 		} else {
 			DialogBuilder.informativeDialog(result);
 		}
@@ -447,74 +507,6 @@ public class GameController {
 		}
 		
 		return currentPlayerLocation;
-	}
-	
-	public void doApplyMortgage(String stockName, int dummy) {
-		Player currentPlayer = getCurrentPlayer();
-		Stock stock = null;
-		ArrayList<Player> players = getPlayers();
-		int size = players.size();
-		
-		for (int i = 0; i < size; i++) {
-			Player player = players.get(i);
-			ArrayList<Stock> stocks = player.getStocks();
-			int stocksSize = stocks.size();
-			
-			for (int j = 0; j < stocksSize; j++) {
-				if (stocks.get(j).getName().equals(stockName)) {
-					stock = stocks.get(j);
-					break;
-				}
-			}
-			
-			if (stock != null) {
-				break;
-			}
-		}
-		
-		Checker checker = getChecker();
-		String result = checker.checkApplyMortgage(stock);
-		DialogBuilder.informativeDialog(result);
-		
-		if (result.equals("true")) {
-			currentPlayer.applyMortgageTo(stock);
-		} else {
-			
-		}
-	}
-	
-	public void doRemoveMortgage(String stockName, int dummy) {
-		Player currentPlayer = getCurrentPlayer();
-		Stock stock = null;
-		ArrayList<Player> players = getPlayers();
-		int size = players.size();
-		
-		for (int i = 0; i < size; i++) {
-			Player player = players.get(i);
-			ArrayList<Stock> stocks = player.getStocks();
-			int stocksSize = stocks.size();
-			
-			for (int j = 0; j < stocksSize; j++) {
-				if (stocks.get(j).getName().equals(stockName)) {
-					stock = stocks.get(j);
-					break;
-				}
-			}
-			
-			if (stock != null) {
-				break;
-			}
-		}
-		
-		Checker checker = getChecker();
-		String result = checker.checkRemoveMortgage(stock);
-		DialogBuilder.informativeDialog(result);
-		
-		if (result.equals("true")) {
-			currentPlayer.removeMortgageFrom(stock);
-		} else {
-			
-		}
 	}
 	
 	public void doSaveGame() {

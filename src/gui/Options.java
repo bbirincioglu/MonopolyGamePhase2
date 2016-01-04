@@ -477,10 +477,44 @@ public class Options extends JPanel {
 						200, buyableSquaresNames, null, null));
 				add(getSquaresComboBox());
 				
-				setCardsComboBox(ComponentBuilder.composeDefaultSteppedComboBox(50, 20, 200, new String[]{}, null, null));
+				
+				setCardsComboBox(ComponentBuilder.composeDefaultSteppedComboBox(50, 20, 500, findPickables(), null, null));
+				add(getCardsComboBox());
 				
 				setStocksComboBox(ComponentBuilder.composeDefaultSteppedComboBox(50, 20, 200, findOptions("stocks.txt", "name"), null, null));
 				add(getStocksComboBox());
+			}
+			
+			private String[] findPickables() {
+				String[] pickables;
+				ArrayList<String> pickableList = new ArrayList<String>();
+				
+				String[] chanceCards = findOptions("chance.txt", "content");
+				String[] communityCards = findOptions("community.txt", "content");
+				int length = chanceCards.length;
+				
+				for (int i = 0; i < length; i++) {
+					if (chanceCards[i].contains(".nim")) {
+						pickableList.add(chanceCards[i]);
+					}
+				}
+				
+				length = communityCards.length;
+				
+				for (int i = 0; i < length; i++) {
+					if (communityCards[i].contains(".nim")) {
+						pickableList.add(communityCards[i]);
+					}
+				}
+				
+				length = pickableList.size();
+				pickables = new String[length];
+				
+				for (int i = 0; i < length; i++) {
+					pickables[i] = pickableList.get(i);
+				}
+				
+				return pickables;
 			}
 			
 			private String[] findOptions(String fileName, String searchKey) {

@@ -25,7 +25,8 @@ public class DebugUtil {
 			player.moveImmediate(monopolyBoard.getSquare(currentLocation));
 			buySquares(player, bank, squares);
 			buyStocks(player, bank, stocks);
-			//pickCards(player, monopolyBoard, cards);
+			pickCards(player, monopolyBoard, cards);
+			System.out.println(player.getCards().size() + "card size");
 			putDiceValues(cup, die1Value, die2Value, speedDieValue);
 			
 			players.add(player);
@@ -97,6 +98,33 @@ public class DebugUtil {
 	}
 	
 	private static void pickCards(Player player, MonopolyBoard monopolyBoard, String cards) {
+		ArrayList<String> cardContents = mySplit(cards, ':');
+		ArrayList<ChanceCard> chanceCards = monopolyBoard.getChanceCards();
+		ArrayList<CommunityCard> communityCards = monopolyBoard.getCommunityCards();
 		
+		for (int i = 0; i < cardContents.size(); i++) {
+			String content = cardContents.get(i);
+			Card card = null;
+			
+			for (int j = 0; j < chanceCards.size(); j++) {
+				if (chanceCards.get(j).getContent().equals(content)) {
+					card = chanceCards.get(j);
+					chanceCards.remove(card);
+					break;
+				}
+			}
+			
+			if (card == null) {
+				for (int k = 0; k < communityCards.size(); k++) {
+					if (communityCards.get(k).getContent().equals(content)) {
+						card = communityCards.get(k);
+						communityCards.remove(card);
+						break;
+					}
+				}
+			}
+			
+			player.getCards().add(card);
+ 		}
 	}
 }

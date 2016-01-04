@@ -1,1 +1,1 @@
-{"playerNumber":"5","isDebugging":"true","currentPlayerIndex":"0","playerMoney":"0"}
+{"playerNumber":"6","isDebugging":"true","currentPlayerIndex":"0","playerMoney":"800"}
