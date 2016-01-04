@@ -14,3 +14,4 @@
 {content:"advance,stock exchange.im.Advance to stock exchange space"}
 {content:"downgrade,1,color.im.Downgrade once every owned property in a color group"}
 {content:"pay,move,50,directly,just visiting,lost 1 turn.im.Pay 50 to bank and go directly to just visiting square and lose 1 turn"}
+{content:"stock,any,1,share.im.You can buy any one share of one stock"}
