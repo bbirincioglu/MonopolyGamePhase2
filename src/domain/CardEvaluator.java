@@ -4,14 +4,14 @@ import java.awt.Color;
 import java.util.ArrayList;
 
 public class CardEvaluator {
-	private Player currentPlayer;
+//	private Player currentPlayer;
 	
 	public void evaluateCard(Player currentPlayer, Card card){
 		String content = card.getContent();
 		String[] actions = actions(content);
 		String[] details = details(content);
 		String action1 = actions[0];
-		String action2 = (actions.length==2) ? actions[1] : null; 
+//		String action2 = (actions.length==2) ? actions[1] : null; 
 		if(action1.equals("jail")){
 			GoToJail jail=(GoToJail) GameController.getInstance().getMonopolyBoard().getOuterSquares().get(42);
 			jail.landedOn(currentPlayer.getPiece());
@@ -47,7 +47,7 @@ public class CardEvaluator {
 			}else if(details[0].equals("directly")){
 				
 			}
-		}else if(action1.equals("pay") && action2==null){
+		}else if(action1.equals("pay")){
 			if(details[0].equals("per")){
 				if(details[1].equals("25")){
 					if(details[2].equals("house")){
@@ -62,12 +62,23 @@ public class CardEvaluator {
 						currentPlayer.setMoney(currentPlayer.getMoney()-25*currentPlayer.getSquares().size());
 					}else if (details[2].equals("40")){
 						ArrayList<BuyableSquare> squares = currentPlayer.getSquares();
-						int totalNum = 0;
+						int cabAndTransit=0,house=0,hotel=0,skyscraper=0;
+					//	int totalNum = 0;
 						for (int i = 0; i < squares.size(); i++) {
-							if(((ColorSquare) squares.get(i))!=null)
-							totalNum+= ((ColorSquare) squares.get(i)).getBuildingNum();
+							if(squares.get(i) instanceof ColorSquare){
+								int number =((ColorSquare) squares.get(i)).getBuildingNum();
+							if(number<4){
+								house+=number;
+							}else if(number==4){
+								hotel++;
+							}else if(number==5){
+								skyscraper++;
+							}
+							}
+							if(squares.get(i) instanceof CabSquare || squares.get(i) instanceof RailRoadSquare)
+								cabAndTransit++;
 						}
-						currentPlayer.setMoney(currentPlayer.getMoney()-25*totalNum);
+						currentPlayer.setMoney(currentPlayer.getMoney()-25*cabAndTransit-40*house-115*hotel-100*skyscraper);
 						
 					}
 				}
@@ -87,7 +98,10 @@ public class CardEvaluator {
 				GameController.getInstance().getMonopolyBoard().getBank().receivePayment(150);
 			}else if(details[0].equals("move")){
 				if(details[1].equals("50")){
-					//doldur
+					
+					currentPlayer.setMoney(currentPlayer.getMoney()-50);
+					currentPlayer.moveImmediate(GameController.getInstance().getMonopolyBoard().getMiddleSquares().get(10));
+					//lose 1 turn
 				}
 			}
 		}else if(action1.equals("downgrade")){
@@ -111,7 +125,15 @@ public class CardEvaluator {
 				}
 			}
 		}else if(action1.equals("bus ticket")){
-			currentPlayer.getCards().clear();
+			ArrayList<Card> cards = currentPlayer.getCards();
+			for (Card card2 : cards) {
+				MonopolyBoard mp =GameController.getInstance().getMonopolyBoard();
+				if(card2 instanceof CommunityCard)
+					mp.getCommunityCards().add((CommunityCard) card2);
+				if(card2 instanceof ChanceCard)
+					mp.getChanceCards().add((ChanceCard) card2);
+			}
+			cards.clear();
 			Square s = DialogBuilder.busTicketDialog(currentPlayer, GameController.getInstance().getMonopolyBoard());
 			currentPlayer.move(s);
 		}else if(action1.equals("stock")){
@@ -130,13 +152,24 @@ public class CardEvaluator {
 						players.get(i).receivePayment((int) (Math.pow(generalNum, 2)*10));
 					}
 				}
+			}else if(details[0].equals("any")){
+				Bank b = GameController.getInstance().getMonopolyBoard().getBank();
+				String str = DialogBuilder.pickAnUnownedStockDialog(b);
+				Stock s = b.getStock(str);
+				currentPlayer.getStocks().add(s);
+				b.getStocks().remove(s);
+			
 			}
 		}else if(action1.equals("move")){
 			if(details[0].equals("above")){
 				MonopolyBoard mp =GameController.getInstance().getMonopolyBoard();
 				Square s = currentPlayer.getCurrentLocation();
 				if(mp.getInnerSquares().contains(s))
+<<<<<<< HEAD
 					//break;
+=======
+					return;
+>>>>>>> refs/remotes/origin/Evaluator
 				if(mp.getMiddleSquares().contains(s)){
 					int index = mp.getMiddleSquares().indexOf(s);
 					int q = index/10;
