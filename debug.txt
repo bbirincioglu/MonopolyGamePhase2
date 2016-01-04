@@ -1,5 +1,2 @@
-{"cards":"free.nim,s.Get out of jail:foreclose.nim,ns.Foreclose any opponents morgtaged property:advance,tax refund.collect,pool.nim,s.Advance tax refund and collect the pool money","die1Value":"1","money":"500","die2Value":"5","name":"Player0","squares":"HENNEPIN AVENUE:CHECKER CAB CO.:READING RAILROAD","speedDieValue":"1","stocks":"Motion Pictures0:Motion Pictures1:Motion Pictures2:Motion Pictures3","currentLocation":"Go"}
-{"cards":"","die1Value":"1","money":"500","die2Value":"1","name":"Player1","squares":"","speedDieValue":"1","stocks":"","currentLocation":"Go"}
-{"cards":"","die1Value":"1","money":"500","die2Value":"1","name":"Player2","squares":"","speedDieValue":"1","stocks":"","currentLocation":"Go"}
-{"cards":"","die1Value":"1","money":"500","die2Value":"1","name":"Player3","squares":"","speedDieValue":"1","stocks":"","currentLocation":"Go"}
-{"cards":"","die1Value":"1","money":"500","die2Value":"1","name":"Player4","squares":"","speedDieValue":"1","stocks":"","currentLocation":"Go"}
+{"cards":"","die1Value":"1","money":"0","die2Value":"1","name":"Player0","squares":"","speedDieValue":"5","stocks":"","currentLocation":"Go"}
+{"cards":"","die1Value":"1","money":"0","die2Value":"1","name":"Player1","squares":"","speedDieValue":"1","stocks":"","currentLocation":"Go"}

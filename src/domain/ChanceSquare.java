@@ -20,7 +20,7 @@ public class ChanceSquare extends Square {
 		CardEvaluator cardEvaluator = GameController.getInstance().getCardEvaluator();
 		cardEvaluator.evaluateCard(player, chanceCard);
 	}
-
+	
 	@Override
 	public void passedOn(Piece piece) {
 		// TODO Auto-generated method stub

@@ -92,7 +92,11 @@ public class SaveLoadUtil {
 					player.buyStock(bank, stock, 0);
 				}
 				
-				//do card contents.
+				for (String content : cardContents) {
+					ChanceCard card = new ChanceCard(content);
+					player.getCards().add(card);
+				}
+				
 				player.moveImmediate(monopolyBoard.getSquare(currentLocation));
 				player.setDirection(direction);
 				player.setInJail(isInJail);
