@@ -165,11 +165,6 @@ public class CardEvaluator {
 				MonopolyBoard mp =GameController.getInstance().getMonopolyBoard();
 				Square s = currentPlayer.getCurrentLocation();
 				if(mp.getInnerSquares().contains(s))
-<<<<<<< HEAD
-					//break;
-=======
-					return;
->>>>>>> refs/remotes/origin/Evaluator
 				if(mp.getMiddleSquares().contains(s)){
 					int index = mp.getMiddleSquares().indexOf(s);
 					int q = index/10;
@@ -217,7 +212,7 @@ public class CardEvaluator {
 			
 	}
 	private String[] actions(String content){
-		String[] parts = content.split(".");
+		String[] parts = copyToArray(mySplit(content, '.'));
 		String[] actions = new String[parts.length-1];
 		for (int i = 0; i < actions.length; i++) {
 			String[] descriptions = parts[i].split(",");
@@ -226,12 +221,46 @@ public class CardEvaluator {
 		return actions;
 	}
 	private String[] details(String content){
-		String[] parts = content.split(".");
+		String[] parts = copyToArray(mySplit(content, '.'));
 		String[] details = new String[parts.length-1];
 		for (int i = 0; i < details.length; i++) {
 			String part = parts[i];
 			details[i]=part.substring(part.indexOf(",")+1,part.length());
 		}
 		return details;
+	}
+	
+	private String[] copyToArray(ArrayList<String> elements) {
+		String[] elementArray = new String[elements.size()];
+		int size = elements.size();
+		
+		for (int i = 0; i < size; i ++) {
+			elementArray[i] = elements.get(i);
+		}
+		
+		return elementArray;
+	}
+	
+	private ArrayList<String> mySplit(String text, char splitChar) {
+		ArrayList<String> splittedText = new ArrayList<String>();
+		String temp = "";
+		int length = text.length();
+		
+		for (int i = 0; i < length; i++) {
+			char charAtI = text.charAt(i);
+			
+			if (charAtI == splitChar) {
+				splittedText.add(temp);
+				temp = "";
+			} else {
+				temp += charAtI;
+			}
+		}
+		
+		if (temp != null && !temp.equals("")) {
+			splittedText.add(temp);
+		}
+		
+		return splittedText;
 	}
 }
